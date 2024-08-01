@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Mode</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        #exam-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <iframe id="exam-frame" src="https://docs.google.com/forms/d/e/1FAIpQLSfUxKDaEiWTEJAt1mKh2gwA59fBaDY-aR1S4rZtShADIstPWw/viewform?embedded=true"></iframe>
+
+    <script>
+        function preventNavigation(e) {
+            e.preventDefault();
+            alert('Navigation is disabled during the exam.');
+        }
+
+        window.onload = function() {
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden) {
+                    alert('Warning: You left the exam page!');
+                }
+            });
+
+            window.history.pushState(null, '', window.location.href);
+            window.addEventListener('popstate', preventNavigation);
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key == 'F12' || (e.ctrlKey && e.shiftKey && e.key == 'I')) {
+                    e.preventDefault();
+                }
+            });
+
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+            });
+        }
+    </script>
+</body>
+</html>
